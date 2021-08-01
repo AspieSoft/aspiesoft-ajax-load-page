@@ -1,0 +1,108 @@
+#wpcontent {
+  padding: 0;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+#aspiesoft-admin-options-header {
+  padding: 10px;
+  box-sizing: border-box;
+  background: #ffffff;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 0 2px #121212;
+}
+
+#aspiesoft-admin-options-header h1 {
+  float: left;
+  margin: 12px 5px;
+  font-size: 2.3em;
+}
+
+#aspiesoft-admin-options-menu {
+  float: right;
+}
+
+#aspiesoft-admin-options-menu input {
+  border: solid 1px #1c1c1c;
+  border-radius: 12px;
+  font-size: 1.5em;
+  padding: 5px 10px;
+  margin: 5px 10px;
+  outline: none;
+  box-shadow: 0 0 2px #121212;
+  cursor: pointer;
+}
+
+#aspiesoft-admin-options-default {
+  background: #b30000;
+  color: #fcfcfc;
+}
+
+#aspiesoft-admin-options-default:hover {
+  background: #d40000;
+}
+
+#aspiesoft-admin-options-save {
+  background: #005cb8;
+  color: #fcfcfc;
+}
+
+#aspiesoft-admin-options-save:hover {
+  background: #006edb;
+}
+
+#aspiesoft-admin-options-save-global {
+  background: #00a3bf;
+  color: #fcfcfc;
+}
+
+#aspiesoft-admin-options-save-global:hover {
+  background: #00b4d4;
+}
+
+#aspiesoft-admin-options {
+  margin: 80px 0 0;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#aspiesoft-admin-options label {
+  font-size: 1.2em;
+  font-weight: 400;
+  padding: 5px;
+}
+
+#aspiesoft-admin-options input, #aspiesoft-admin-options textarea {
+  margin: 2px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0 5px;
+}
+
+#aspiesoft-admin-options input[type="checkbox"], #aspiesoft-admin-options input[type=radio] {
+  height: 1rem;
+  min-height: 1rem;
+}
+
+#aspiesoft-admin-options input[type="number"] {
+  padding-right: 0;
+}
+
+.toast {
+  font-size: 1.2rem;
+}
+
+#toast-container > div {
+  box-shadow: 0 0 12px #121212;
+  opacity: 1;
+}
+
+#toast-container > div:hover {
+  box-shadow: 0 0 12px #212121;
+  filter: brightness(108%);
+}
