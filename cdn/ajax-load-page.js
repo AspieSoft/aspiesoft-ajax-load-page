@@ -30,19 +30,22 @@ SOFTWARE.
     if(running){
       return;
     }
-    if((window.innerHeight + window.scrollY) >= (document.body || (document.getElementsByTagName('body')[0]).offsetHeight - 200)){
+	
+    if((window.innerHeight + window.scrollY) >= (document.body || document.getElementsByTagName('body')[0]).offsetHeight - 200){
       onScrollBottom();
     }
   });
 
   function onScrollBottom(){
     const loadPage = $('a.ajax-load-page').first();
-    if(!loadPage){
+    if(!loadPage.length){
       return;
     }
     running = true;
+	
+	console.log('ajax-load');
 
-    let url = loadPage.getAttr('href');
+    let url = loadPage.attr('href');
     loadPage.removeClass('ajax-load-page');
 
     if(url.startsWith('https://'+window.location.hostname) || (window.location.protocol === 'http:' && url.startsWith('http://'+window.location.hostname))){
