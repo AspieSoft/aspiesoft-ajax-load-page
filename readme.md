@@ -8,7 +8,7 @@ This can help speed up large pages on your site, by not loading the stuff users 
 ## CDN Installation
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/AspieSoft/aspiesoft-ajax-load-page/cdn/ajax-load-page.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AspieSoft/aspiesoft-ajax-load-page@1.0.1/cdn/ajax-load-page.js"></script>
 ```
 
 ---
