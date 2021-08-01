@@ -1,0 +1,9 @@
+iframe.ajax-load-page {
+  display: none;
+}
+
+iframe.ajax-loaded-page {
+  width: 100vw;
+  border: none;
+  display: block;
+}

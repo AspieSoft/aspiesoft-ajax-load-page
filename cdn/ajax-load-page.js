@@ -49,7 +49,13 @@ SOFTWARE.
     if(!url || url === ''){
       url = loadPage.attr('page-src');
       if(url.startsWith('https://'+window.location.hostname) || (window.location.protocol === 'http:' && url.startsWith('http://'+window.location.hostname))){
-        loadPage.attr('src', url);
+        loadPage.attr('src', url).addClass('ajax-loaded-page').attr({'frameborder': '0', 'scrolling': 'no', 'sandbox': 'allow-same-origin'});
+        loadPage.on('load', function(){
+          this.style.height = this.contentWindow.document.documentElement.scrollHeight+'px';
+          setInterval(() => {
+            this.style.height = this.contentWindow.document.documentElement.scrollHeight+'px';
+          }, 100);
+        });
       }
       running = false;
       return;
