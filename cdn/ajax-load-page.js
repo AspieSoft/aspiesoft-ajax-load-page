@@ -42,8 +42,6 @@ SOFTWARE.
       return;
     }
     running = true;
-	
-	console.log('ajax-load');
 
     let url = loadPage.attr('href');
     loadPage.removeClass('ajax-load-page');
