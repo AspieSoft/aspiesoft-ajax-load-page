@@ -26,6 +26,7 @@ This can help speed up large pages on your site, by not loading the stuff users 
 ```WordPress
 [ajax-load-page
   url="url of page to load"
+  type="ajax or iframe (optional) (default: ajax)"
 ]
 ```
 
@@ -35,6 +36,9 @@ This can help speed up large pages on your site, by not loading the stuff users 
 
 ```javascript
 <a href="url of page to load" class="ajax-load-page"></a>
+
+// optional load as iframe instead of making an ajax request
+<iframe page-src="url of page to load" class="ajax-load-page"></iframe>
 ```
 
 ---

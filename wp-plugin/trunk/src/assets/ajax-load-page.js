@@ -30,21 +30,30 @@ SOFTWARE.
     if(running){
       return;
     }
-	
+
     if((window.innerHeight + window.scrollY) >= (document.body || document.getElementsByTagName('body')[0]).offsetHeight - 200){
       onScrollBottom();
     }
   });
 
   function onScrollBottom(){
-    const loadPage = $('a.ajax-load-page').first();
+    const loadPage = $('a.ajax-load-page, iframe.ajax-load-page').first();
     if(!loadPage.length){
       return;
     }
     running = true;
 
-    let url = loadPage.attr('href');
     loadPage.removeClass('ajax-load-page');
+    let url = loadPage.attr('href');
+
+    if(!url || url === ''){
+      url = loadPage.attr('page-src');
+      if(url.startsWith('https://'+window.location.hostname) || (window.location.protocol === 'http:' && url.startsWith('http://'+window.location.hostname))){
+        loadPage.attr('src', url);
+      }
+      running = false;
+      return;
+    }
 
     if(url.startsWith('https://'+window.location.hostname) || (window.location.protocol === 'http:' && url.startsWith('http://'+window.location.hostname))){
       $.ajax({
@@ -66,7 +75,7 @@ SOFTWARE.
             if(!pageContent.length){pageContent = resultHtml.find('#content');}
             if(!pageContent.length){pageContent = resultHtml.find('[role="main"]');}
             if(!pageContent.length){pageContent = resultHtml.find('.single-page-container');}
-            
+
             if(!pageContent.length){
               loadPage.remove();
               running = false;

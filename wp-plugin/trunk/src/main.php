@@ -39,6 +39,7 @@ if(!class_exists('AspieSoft_AjaxLoadPage_Main')){
     function shortcode_loadPage($atts = ''){
       $attr = shortcode_atts(array(
         'url' => false, 'page' => false,
+        'type' => false, 'method' => false,
       ), $atts);
 
       $attr = self::$func::cleanShortcodeAtts($attr);
@@ -48,7 +49,26 @@ if(!class_exists('AspieSoft_AjaxLoadPage_Main')){
         $url = $attr['page'];
       }
 
+      $type = $attr['type'];
+      if(!$type && $type['method']){
+        $type = $type['method'];
+      }
+
       $url = get_site_url(null, $url);
+
+      if($type === 'ajax'){
+        return '<a href="'.esc_url($url).'" class="ajax-load-page"></a>';
+      }else if($type === 'iframe'){
+        return '<iframe page-src="'.esc_url($url).'" class="ajax-load-page"></a>';
+      }
+
+      $defaultType = self::$options['get']('defaultType', 'ajax');
+
+      if($defaultType === 'ajax'){
+        return '<a href="'.esc_url($url).'" class="ajax-load-page"></a>';
+      }else if($defaultType === 'iframe'){
+        return '<iframe page-src="'.esc_url($url).'" class="ajax-load-page"></a>';
+      }
 
       return '<a href="'.esc_url($url).'" class="ajax-load-page"></a>';
     }

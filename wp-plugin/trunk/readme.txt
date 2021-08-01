@@ -26,6 +26,7 @@ This can help speed up large pages on your site, by not loading the stuff users 
 = How do I use the shortcode? =
 [ajax-load-page
   url="url of page to load"
+  type="ajax or iframe (optional) (default: ajax)"
 ]
 
 = How to load only a specific part of a page? =
@@ -39,10 +40,16 @@ If this does fail, you can wrap your main content in the html tag with the class
 
 == Changelog ==
 
+= 1.1 =
+Added option to load page as iframe
+
 = 1.0 =
 Initial Commit
 
 == Upgrade Notice ==
+
+= 1.1 =
+Added option to load page as iframe
 
 = 1.0 =
 Initial Commit

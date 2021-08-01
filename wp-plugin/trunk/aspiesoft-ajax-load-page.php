@@ -6,7 +6,7 @@
 Plugin Name: AspieSoft Ajax Load Page
 Plugin URI: https://github.com/AspieSoft/aspiesoft-ajax-load-page
 Description: Easily lazy load another page simply by adding a shortcode with its url.
-Version: 1.0.1
+Version: 1.1
 Author: AspieSoft
 Author URI: https://www.aspiesoft.com
 License: GPLv2 or later

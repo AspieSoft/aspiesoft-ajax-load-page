@@ -18,6 +18,11 @@ if(!class_exists('AspieSoft_AjaxLoadPage_Settings')){
         'jsdelivr' => array('label' => 'Use jsdelivr.net (recommended)', 'default' => 'false', 'form' => '[check][label][br][br]', 'type' => 'bool'),
 
         'altShortcode' => array('label' => 'Alternate Shortcode Name', 'default' => '', 'form' => '[label][text][br][br]'),
+
+        'defaultType' => array('label' => 'Default Type', 'default' => 'ajax', 'form' => '[label][select][br]', 'type' => 'select', 'options' => array(
+          'ajax' => 'AJAX Load Content',
+          'iframe' => 'Iframe Embed',
+        )),
       );
       return $optionList;
     }
