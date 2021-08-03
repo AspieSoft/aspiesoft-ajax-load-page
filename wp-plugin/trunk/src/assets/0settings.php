@@ -20,8 +20,8 @@ if(!class_exists('AspieSoft_AjaxLoadPage_AssetSettings')){
     public function init($pluginData){
       $this->plugin = $pluginData;
       require_once(plugin_dir_path(__FILE__).'../../functions.php');
-      global $aspieSoft_Functions_v1_1;
-      self::$func = $aspieSoft_Functions_v1_1;
+      global $aspieSoft_Functions_v1_3;
+      self::$func = $aspieSoft_Functions_v1_3;
     }
 
     /*public function addScript($scriptBefore){

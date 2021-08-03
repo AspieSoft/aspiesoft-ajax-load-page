@@ -181,6 +181,9 @@
         if(inputType === 'br'){
           return '<br'+style+'>';
         }
+        if(inputType === 'hr'){
+          return '<hr'+style+'>';
+        }
         if(inputType === 'label'){
           return '<label for="'+name+'"'+style+'>'+label+'</label>';
         }

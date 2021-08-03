@@ -12,8 +12,10 @@ body {
   box-sizing: border-box;
   background: #ffffff;
   position: fixed;
+  top: 32px;
   width: 100%;
   box-shadow: 0 0 2px #121212;
+  z-index: 1000;
 }
 
 #aspiesoft-admin-options-header h1 {
@@ -105,4 +107,12 @@ body {
 #toast-container > div:hover {
   box-shadow: 0 0 12px #212121;
   filter: brightness(108%);
+}
+
+.wp-notifications {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  position: absolute;
+  top: 79px;
 }

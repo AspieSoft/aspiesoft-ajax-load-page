@@ -15,6 +15,7 @@ if(!class_exists('AspieSoft_Settings')){
 
     function start(){
       $options = self::$func::options($this->plugin);
+      $optionsGlobal = self::$func::options(array('setting' => 'global'));
       $optionList = array();
 
       // get option list from src directory
@@ -22,9 +23,11 @@ if(!class_exists('AspieSoft_Settings')){
       $pName = str_replace('-', '_', sanitize_html_class($this->plugin['pluginName']));
       if(class_exists('AspieSoft_'.$pName.'_Settings')){
         $optionList = ${'aspieSoft_'.$pName.'_Settings'}->getOptionList();
+        //$optionListGlobal = ${'aspieSoft_'.$pName.'_Settings'}->getOptionListGlobal();
       }
 
       $optionList = $options['getList']($optionList);
+      //$optionListGlobal = $optionsGlobal['getList']($optionListGlobal);
 
       if(isset($_POST['UpdateOptions'])){ // if post request, update options
 
@@ -71,6 +74,7 @@ if(!class_exists('AspieSoft_Settings')){
           exit();
         }else if($updateOptions === 'local'){ // update site options
           $options['setList']($optionList, false);
+          //$optionsGlobal['setList']($optionListGlobal, false);
 
           // update session expiration
           $sToken['expires'] = round(microtime(true) * 1000)+7200*1000;
@@ -81,6 +85,7 @@ if(!class_exists('AspieSoft_Settings')){
           exit();
         }else if($updateOptions === 'global'){ // update network default options (for multisite)
           $options['setList']($optionList, true);
+          //$optionsGlobal['setList']($optionListGlobal, true);
 
           // update session expiration
           $sToken['expires'] = round(microtime(true) * 1000)+7200*1000;
@@ -96,26 +101,14 @@ if(!class_exists('AspieSoft_Settings')){
         exit();
       }else{ // load settings form
         $jsonOptions = array();
+        /*foreach($optionListGlobal as $k => $v){
+          $jsonOptions['AspieSoft_Option_'.$k] = $v;
+        }*/
         foreach($optionList as $k => $v){
           $jsonOptions['AspieSoft_Option_'.$k] = $v;
         }
         $json = wp_json_encode($jsonOptions);
 
-        add_action('admin_enqueue_settings_scripts', array($this, 'enqueue'));
-        do_action('admin_enqueue_settings_scripts', $json);
-
-        // add form
-        $optionsHeader = '<div id="aspiesoft-admin-options-header"><h1>'.$this->plugin['name'].'</h1><div id="aspiesoft-admin-options-menu">';
-        $optionsHeader .= '<input type="button" id="aspiesoft-admin-options-default" value="Restore Defaults">';
-        if(!is_multisite()){
-          $optionsHeader .= '<input type="button" id="aspiesoft-admin-options-save" value="Save Changes">';
-        }else{
-          if(current_user_can('manage_network_plugins') || current_user_can('manage_network_options') || current_user_can('manage_network')){
-            $optionsHeader .= '<input type="button" id="aspiesoft-admin-options-save-global" value="Network Save">';
-          }
-          $optionsHeader .= '<input type="button" id="aspiesoft-admin-options-save" value="Save Changes">';
-        }
-        $optionsHeader .= '</div></div>';
 
         // generate random session token
         $settingsToken = str_replace('"', '`', wp_generate_password(64));
@@ -129,23 +122,41 @@ if(!class_exists('AspieSoft_Settings')){
           'expires' => round(microtime(true) * 1000)+7200*1000, // 2 hours
         )), false);
 
-        echo $optionsHeader;
-        echo '<form id="aspiesoft-admin-options"><input type="hidden" name="AspieSoft_Settings_Token" value="'.$settingsToken.'"></form>';
 
+        $pluginInfoJson = wp_json_encode(array(
+          'plugin_name' => esc_html($this->plugin['name']),
+          'is_multisite' => !!is_multisite(),
+          'can_manage_network' => !!(current_user_can('manage_network_plugins') || current_user_can('manage_network_options') || current_user_can('manage_network')),
+          'settingsToken' => esc_html($settingsToken)
+        ));
+
+        add_action('admin_enqueue_settings_scripts', array($this, 'enqueue'));
+        do_action('admin_enqueue_settings_scripts', array(
+          'json' => $json,
+          'pluginInfo' => $pluginInfoJson,
+        ));
       }
     }
 
-    function enqueue($jsonOptions){
+    function enqueue($opts){
+      $jsonOptions = $opts['json'];
+      $jsonInfo = $opts['pluginInfo'];
+
+      $ver = '1.2';
+
       // styles
       wp_enqueue_style('toastr', plugins_url('/../assets/toastr/toastr.min.css', __FILE__), array(), '2.1.4');
 
-      wp_enqueue_style('AspieSoft_Settings_Style', plugins_url('/../assets/settings.css', __FILE__), array(), '1.0');
+      wp_enqueue_style('AspieSoft_Settings_Style', plugins_url('/../assets/settings.css', __FILE__), array(), $ver);
 
 
       // scripts
+      wp_enqueue_script('AspieSoft_Settings_AdminPage_Script', plugins_url('/../assets/admin-page.js', __FILE__), array('jquery'), $ver, true);
+      wp_add_inline_script('AspieSoft_Settings_AdminPage_Script', ";var AspieSoftAdminOptionsInfo = $jsonInfo;", 'before');
+
       wp_enqueue_script('toastr', plugins_url('/../assets/toastr/toastr.min.js', __FILE__), array('jquery'), '2.1.4', false);
 
-      wp_enqueue_script('AspieSoft_Settings_Script', plugins_url('/../assets/settings.js', __FILE__), array('jquery'), '1.0', true);
+      wp_enqueue_script('AspieSoft_Settings_Script', plugins_url('/../assets/settings.js', __FILE__), array('jquery'), $ver, true);
       wp_add_inline_script('AspieSoft_Settings_Script', ";var AspieSoftAdminOptionsList = $jsonOptions;", 'before');
     }
 
@@ -163,8 +174,8 @@ if(!class_exists('AspieSoft_Settings')){
 
       // load common functions
       require_once(plugin_dir_path(__FILE__).'../functions.php');
-      global $aspieSoft_Functions_v1_1;
-      self::$func = $aspieSoft_Functions_v1_1;
+      global $aspieSoft_Functions_v1_3;
+      self::$func = $aspieSoft_Functions_v1_3;
     }
 
   }
