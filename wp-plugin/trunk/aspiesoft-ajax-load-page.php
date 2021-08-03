@@ -31,6 +31,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/* This is made from a plugin template made by AspieSoft: https://github.com/AspieSoft/wp-plugin-template */
+/* The main plugin code that changes, is located in the "src" directory */
+
+
 // In God We Trust
 
 
